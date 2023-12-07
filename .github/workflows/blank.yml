@@ -1,0 +1,32 @@
+name: Caching Primes
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Restore cached Primes
+      id: cache-primes-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          README.md
+        key: repo_cache_test
+
+    - name: Run a one-line script
+      run: cat README.md
+
+    - name: Run a one-line script
+      run: date "+%H:%M:%S   %d/%m/%y" > README.md
+
+    - name: Save Primes
+      id: cache-primes-save
+      uses: actions/cache/save@v3
+      with:
+        path: |
+          README.md
+        key: repo_cache_test
